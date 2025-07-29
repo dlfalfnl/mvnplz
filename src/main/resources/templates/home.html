@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+</head>
+<body>
+    <div>
+        <!-- <h1>Welcome, <span th:text="${user.displayName}">User</span>!</h1>
+        <p>Email: <span th:text="${user.mail}">email@example.com</span></p> -->
+        <h1>Welcome, <span th:text="${user.attributes['displayName']}">User</span>!</h1>
+        <p>Email: <span th:text="${user.attributes['mail']}">email@example.com</span></p>
+        <!-- <h2>All Claims:</h2>
+        <ul>
+            <li th:each="entry : ${user.claims}">
+                <strong th:text="${entry.key}"></strong>: <span th:text="${entry.value}"></span>
+            </li>
+        </ul> -->
+    </div>
+    <footer>
+        <form th:action="@{/logout}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button type="submit">Logout</button>
+        </form>
+    </footer>
+</body>
+</html>
