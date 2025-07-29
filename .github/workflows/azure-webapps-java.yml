@@ -1,0 +1,30 @@
+name: Build and Deploy Java App to Azure Web App
+
+on:
+  push:
+    branches:
+      - main  # or whatever your default branch is
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17' # or 11/21 depending on your pom.xml
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: mvn clean package --settings settings.xml
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ben-ora-java-client2   # <-- replace with your Azure App Service name
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: target/*.jar           # <-- the output of Maven
